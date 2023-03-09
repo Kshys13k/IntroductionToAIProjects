@@ -1,6 +1,7 @@
 import copy
 
-from Lab1 import Item
+from Lab1.knapsackProblem import Item
+
 #dwuwymiarowa tablica służąca przechowująca informacje o przedmiotach,
 #pierwszy rząd-wartość,
 #drugi rząd- cena,
@@ -125,7 +126,7 @@ def algorithm3(maxCounter):
 
 itemList=[]
 for i in range (0,len(items[0])):
-        item=Item.Item(i,items[0][i],items[1][i])
+        item= Item.Item(i, items[0][i], items[1][i])
         itemList.append(item)
 result=algorithm2()
 for i in range (0, len(result)):
