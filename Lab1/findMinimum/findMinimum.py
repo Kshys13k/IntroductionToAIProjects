@@ -10,8 +10,10 @@ def gradientDescent(X,Y,learningRate, maxIteration, epsilon):
         print(str(X) + " " + str(Y) + " " + str(RosenbrockFunction(X, Y)))
         X=X-(learningRate*RosenbrockFunctionXDerivative(X,Y))
         Y=Y-(learningRate*RosenbrockFunctionYDerivative(X,Y))
-        if(RosenbrockFunction(X,Y)<epsilon): break
-    return X, Y, RosenbrockFunction(X,Y)
+        if(RosenbrockFunction(X,Y)<epsilon):
+            maxIteration=i
+            break
+    return X, Y, RosenbrockFunction(X,Y), maxIteration
 
 
 gradientDescent(3,1, 1e-6, 10000, 0)
