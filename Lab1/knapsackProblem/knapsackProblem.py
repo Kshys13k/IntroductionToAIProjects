@@ -120,15 +120,41 @@ def algorithm3(maxCounter):
         #next item
         i+=1
 
+#przegląd wyczerpujący
+def algorithm4():
+    currentWeight = 0
+    currentPrice = 0
+    bestPrice=0
+    bestItemList=copy.deepcopy(itemList)
+    for i in range (0, 2**len(itemList)):
+        #set next configuration
+        for j in range (0,len(itemList)):
+            if itemList[j].haveBeenTaken == False:
+                currentWeight += itemList[j].w
+                currentPrice += itemList[j].p
+                itemList[j].haveBeenTaken = True
+                break
+            itemList[j].haveBeenTaken=False
+            currentWeight -= itemList[j].w
+            currentPrice -= itemList[j].p
+
+        if currentWeight<=maxWeight and currentPrice>bestPrice:
+            bestItemList=copy.deepcopy(itemList)
+            bestPrice=currentPrice
+    return bestItemList
 
 
 
 
+
+#convert 2dim list to list of Items
 itemList=[]
 for i in range (0,len(items[0])):
         item= Item.Item(i, items[0][i], items[1][i])
         itemList.append(item)
-result=algorithm2()
+
+#do algorithm and print results
+result=algorithm4()
 for i in range (0, len(result)):
             print(result[i])
 
