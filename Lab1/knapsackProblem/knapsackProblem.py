@@ -12,7 +12,7 @@ items= [[16,8,9,6],
 #maksymalna waga= pojemność plecaka
 maxWeight=9
 
-#posortowanie względem p/w i wzięcie najkorzystniejszych
+#heuristic- sort ralative to p/w and take the best items that fits
 def algorithm1():
         itemList.sort(key=lambda x: x.pwratio, reverse=True)
         weightSum=0
@@ -120,7 +120,7 @@ def algorithm3(maxCounter):
         #next item
         i+=1
 
-#przegląd wyczerpujący
+#brute force search O(2^n)
 def algorithm4():
     currentWeight = 0
     currentPrice = 0
