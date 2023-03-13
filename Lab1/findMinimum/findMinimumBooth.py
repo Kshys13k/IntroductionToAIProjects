@@ -7,6 +7,7 @@ def BoothFunctionXDerivative(x,y):
 def BoothFunctionYDerivative(x, y):
     return 8*x+10*y-38
 
+#prints all steps of gradient descent algorithm for Booth function; returns X,Y cordinates of solution, solution and number of steps
 def gradientDescent(X,Y,learningRate, maxIteration, epsilon):
     for i in range (0,maxIteration):
         print(str(X) + " " + str(Y) + " " + str(BoothFunction(X, Y)))
@@ -17,6 +18,8 @@ def gradientDescent(X,Y,learningRate, maxIteration, epsilon):
             break
     return X, Y, BoothFunction(X,Y), maxIteration
 
+#X,Y should be in range (-10,10); plots all steps of gradient descent algorithm for Booth function;
+#returns X,Y cordinates of solution, solution and number of steps
 def gradientDescentPlot(X,Y,learningRate, maxIteration, epsilon):
     #creating plot:
     MAX_X = 10

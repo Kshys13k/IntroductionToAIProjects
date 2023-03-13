@@ -1,6 +1,8 @@
 import numpy as np
 # Using only f5:
 from cec2017.functions import f5
+
+#example code from cec2017 github repository
 samples = 1
 dimension = 10
 x = np.random.uniform(-100, 100, size=(samples, dimension))

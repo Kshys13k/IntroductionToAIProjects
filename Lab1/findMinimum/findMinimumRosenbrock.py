@@ -5,6 +5,8 @@ def RosenbrockFunctionXDerivative(x,y):
     return 400*x**3-400*x*y+2*x-2
 def RosenbrockFunctionYDerivative(x,y):
     return 200*(y-x**2)
+
+#prints all steps of gradient descent algorithm for Rosenbrock function; returns X,Y cordinates of solution, solution and number of steps
 def gradientDescent(X,Y,learningRate, maxIteration, epsilon):
     for i in range (0,maxIteration):
         print(str(X) + " " + str(Y) + " " + str(RosenbrockFunction(X, Y)))

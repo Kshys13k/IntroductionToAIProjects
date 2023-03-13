@@ -5,6 +5,8 @@ import numpy as np
 
 from cec2017.functions import f1
 
+#exemple code from laboratory instruction (it has been modified so it works)
+
 MAX_X = 100
 PLOT_STEP = 0.1
 
