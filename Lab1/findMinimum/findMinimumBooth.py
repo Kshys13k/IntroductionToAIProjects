@@ -43,7 +43,7 @@ def gradientDescentPlot(X,Y,learningRate, maxIteration, epsilon):
         Y1 = Y
         X=X-(learningRate*BoothFunctionXDerivative(X,Y))
         Y=Y-(learningRate*BoothFunctionYDerivative(X,Y))
-        plt.arrow(X1, Y1, X-X1, Y-Y1, head_width=0.5, head_length=1, fc='k', ec='k')
+        plt.arrow(X1, Y1, X-X1, Y-Y1, head_width=0.3, head_length=0.3, fc='k', ec='k')
         if(BoothFunction(X,Y)<epsilon):
             maxIteration=i
             break
