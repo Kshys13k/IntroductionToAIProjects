@@ -20,4 +20,5 @@ for i in range(X.shape[0]):
 
 plt.contour(X, Y, Z, 20)
 plt.arrow(0, 0, 50, 50, head_width=3, head_length=6, fc='k', ec='k')
+plt.arrow(50, 50, 20, 20, head_width=3, head_length=6, fc='k', ec='k')
 plt.show()
