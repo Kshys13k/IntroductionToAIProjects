@@ -30,6 +30,10 @@ class KnapsackProblem:
         bestPriceSum = priceSum
         i = 0
         while 1 == 1:
+            # if self.itemList[0].haveBeenTaken==self.itemList[1].haveBeenTaken==self.itemList[2].haveBeenTaken==self.itemList[3].haveBeenTaken==self.itemList[4].haveBeenTaken==self.itemList[5].haveBeenTaken==self.itemList[6].haveBeenTaken==self.itemList[10].haveBeenTaken==True and self.itemList[7].haveBeenTaken==False:
+            if self.itemList[0].haveBeenTaken==self.itemList[1].haveBeenTaken==self.itemList[2].haveBeenTaken==self.itemList[3].haveBeenTaken==self.itemList[4].haveBeenTaken==self.itemList[5].haveBeenTaken==True:
+
+                print("dupa")
             # if i points the worst item, we take out this item and second worst item that we have in bag
             if i == len(self.itemList):
                 i -= 1
@@ -48,7 +52,7 @@ class KnapsackProblem:
                 i += 1
 
             # if we can we add new item
-            if weightSum + self.itemList[i].w < self.maxWeight:
+            if weightSum + self.itemList[i].w <= self.maxWeight:
                 weightSum += self.itemList[i].w
                 priceSum += self.itemList[i].p
                 self.itemList[i].haveBeenTaken = True
@@ -100,7 +104,7 @@ class KnapsackProblem:
                 i += 1
 
             # if we can we add new item
-            if weightSum + self.itemList[i].w < self.maxWeight:
+            if weightSum + self.itemList[i].w <= self.maxWeight:
                 weightSum += self.itemList[i].w
                 priceSum += self.itemList[i].p
                 self.itemList[i].haveBeenTaken = True
