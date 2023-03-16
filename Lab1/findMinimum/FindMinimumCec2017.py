@@ -19,6 +19,8 @@ class FindMinimumCec2017:
             gradTable=self.numericGradient(func, args)
             for i in range(len(args[0])):
                 args[0][i]=args[0][i]-learningRate*gradTable[i]
+                if args[0][i]>=100 or args[0][i]<=-100:
+                    return *args, func(args)
         return args, func(args)
 
     def gradientDescentVerbose(self,func, args, learningRate, maxIteration):
@@ -26,6 +28,8 @@ class FindMinimumCec2017:
             gradTable=self.numericGradient(func, args)
             for i in range(len(args[0])):
                 args[0][i]=args[0][i]-learningRate*gradTable[i]
+                if args[0][i]>=100 or args[0][i]<=-100:
+                    return *args, func(args)
             print("X1: " + str(args[0][0])+ " X2: "+ str(args[0][1])+ " f= "+ str(func(args)))
         return args, func(args)
 
@@ -42,8 +46,7 @@ class FindMinimumCec2017:
                 argsCopy[0][0]=Xplot[i, j]
                 argsCopy[0][1]=Yplot[i, j]
                 Z[i, j] = func(argsCopy)
-        levels = []
-        # for i in range(0, 1000, 2000): levels.append(i)
+
         plt.contourf(Xplot, Yplot, Z, 75, cmap="rainbow")
         plt.contour(Xplot, Yplot, Z, 75, colors="black")
 
@@ -53,9 +56,11 @@ class FindMinimumCec2017:
                 x1=args[0][0]
                 x2=args[0][1]
                 args[0][i]=args[0][i]-learningRate*gradTable[i]
+                if args[0][i]>=100 or args[0][i]<=-100:
+                    return *args, func(args)
             plt.arrow(args[0][0], args[0][1], x1-args[0][0], x2-args[0][1], head_width=0.3, head_length=0.3, fc='k', ec='k')
         plt.show()
-        return args, func(args)
+        return *args, func(args)
 
 
 # samples=1
