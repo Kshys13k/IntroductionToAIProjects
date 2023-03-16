@@ -6,9 +6,6 @@ from cec2017.functions import f5
 samples = 1
 dimension = 10
 x = np.random.uniform(-100, 100, size=(samples, dimension))
-print(type(x))
-print(x.shape)
-print(x)
 val = f5(x)
 for i in range(samples):
     print(f"f5(x_{i}) = {val[i]:.6f}")
