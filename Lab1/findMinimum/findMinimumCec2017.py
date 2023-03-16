@@ -1,3 +1,4 @@
+from _decimal import Decimal
 import numpy as np
 from cec2017.functions import f1, f2, f3
 import matplotlib.pyplot as plt
@@ -12,7 +13,9 @@ def numericGradient(func, args):
         print("dupa")
         print(func(argsCopy))
         print(func(args))
-        gradient=(func(argsCopy)-func(args))/EPSILON
+        gradient=Decimal(((func(argsCopy)-func(args))/EPSILON)[0])
+        print(gradient)
+        print(type(gradient))
         gradientTable.append(gradient)
     return gradientTable
 
