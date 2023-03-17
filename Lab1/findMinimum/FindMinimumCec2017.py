@@ -58,7 +58,7 @@ class FindMinimumCec2017:
                 args[0][i]=args[0][i]-learningRate*gradTable[i]
                 if args[0][i]>=100 or args[0][i]<=-100:
                     return *args, func(args)
-            plt.arrow(args[0][0], args[0][1], x1-args[0][0], x2-args[0][1], head_width=0.3, head_length=0.3, fc='k', ec='k')
+            plt.arrow(x1, x2, args[0][0]-x1, args[0][1]-x2, head_width=0.3, head_length=0.3, fc='k', ec='k')
         plt.show()
         return *args, func(args)
 
