@@ -2,5 +2,5 @@ import GeneticAlgorithm
 
 gn=GeneticAlgorithm.GeneticAlgorithm()
 gn.generateRandomPopulation()
-gn.geneticAlgorithm()
+gn.geneticAlgorithmStats(50,10000)
 gn.printPopulation()
