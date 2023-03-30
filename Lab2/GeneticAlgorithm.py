@@ -3,7 +3,7 @@ import random
 import numpy as np
 from cec2017.functions import f1, f2, f3
 import matplotlib.pyplot as plt
-import Individual
+from Lab2.Individual import  Individual
 
 class GeneticAlgorithm:
     def __init__(self):
@@ -12,25 +12,24 @@ class GeneticAlgorithm:
         population = []
         for i in range(0, populationSize):
             x = np.random.uniform(-100, 100, size=(1, 10))
-            ind = Individual.Individual(x)
+            ind = Individual(x)
             population.append(ind)
         return population
 
     #pM- probability od mutation [%]
     #tMAX- number of evolution steps
-    def geneticAlgorithm(self, pM=5, tMAX=10000, functionNumber=4):
+    def geneticAlgorithm(self, pM=5, tMAX=10000, functionNumber=4, elite=50):
         POPULATION=len(self.population)
-        ELITE = int(POPULATION/2)
         population=self.population
         t=0
         while t<tMAX:
             #choosing elite individuals from population (natural selection) and create new population based on this group (mutations are possible, interbreeding is forbiten)
             population= sorted(population, key=lambda x: x.score, reverse=False)
             children=[]
-            for i in range(ELITE):
-                for j in range(int(POPULATION/ELITE)):
+            for i in range(elite):
+                for j in range(int(POPULATION/elite)):
 
-                    ind=Individual.Individual(population[i].genes, population[j].score, functionNumber)
+                    ind=Individual(population[i].genes, population[j].score, functionNumber)
                     mutationsCounter=0
                     while 1==1: #draw number of mutations (poisson distibution for p=pM)
                         if random.randint(0,99)<=pM: mutationsCounter+=1
@@ -50,9 +49,8 @@ class GeneticAlgorithm:
             t += 1
         self.population=population
 
-    def geneticAlgorithmVerbose(self, pM=5, tMAX=10000, functionNumber=4):
+    def geneticAlgorithmVerbose(self, pM=5, tMAX=10000, functionNumber=4, elite=50):
         POPULATION=len(self.population)
-        ELITE = int(POPULATION/2)
         population=self.population
         t=0
         while t<tMAX:
@@ -62,10 +60,10 @@ class GeneticAlgorithm:
             #choosing elite individuals from population (natural selection) and create new population based on this group (mutations are possible, interbreeding is forbiten)
             population= sorted(population, key=lambda x: x.score, reverse=False)
             children=[]
-            for i in range(ELITE):
-                for j in range(int(POPULATION/ELITE)):
+            for i in range(elite):
+                for j in range(int(POPULATION/elite)):
 
-                    ind=Individual.Individual(population[i].genes, population[j].score)
+                    ind=Individual(population[i].genes, population[j].score)
                     mutationsCounter=0
                     while 1==1: #draw number of mutations (poisson distibution for p=pM)
                         if random.randint(0,99)<=pM: mutationsCounter+=1
@@ -85,10 +83,9 @@ class GeneticAlgorithm:
             t += 1
         self.population=population
 
-    def geneticAlgorithmStats(self, pM=5, tMAX=10000, functionNumber=4):
+    def geneticAlgorithmStats(self, pM=5, tMAX=10000, functionNumber=4, elite=50):
 
         POPULATION=len(self.population)
-        ELITE = int(POPULATION/2)
         population=self.population
         bestInd=population[0]
         t=0
@@ -103,10 +100,10 @@ class GeneticAlgorithm:
                 bestInd = copy.deepcopy(population[0])
                 print("New best: "+ str(bestInd) + " current step: "+ str(t))
             children=[]
-            for i in range(ELITE):
-                for j in range(int(POPULATION/ELITE)):
+            for i in range(elite):
+                for j in range(int(POPULATION/elite)):
 
-                    ind=Individual.Individual(population[i].genes, population[j].score)
+                    ind=Individual(population[i].genes, population[j].score)
                     mutationsCounter=0
                     while 1==1: #draw number of mutations (poisson distibution for p=pM)
                         if random.randint(0,99)<=pM:
@@ -127,10 +124,9 @@ class GeneticAlgorithm:
             t += 1
         self.population=population
 
-    def geneticAlgorithm2Stats(self, pM=5, tMAX=10000, functionNumber=4):
+    def geneticAlgorithm2Stats(self, pM=5, tMAX=10000, functionNumber=4, elite=50):
         print(str(pM))
         POPULATION=len(self.population)
-        ELITE = int(POPULATION/2)
         population=self.population
         population = sorted(population, key=lambda x: x.score, reverse=False)
         bestInd = copy.deepcopy(population[0])
@@ -145,10 +141,10 @@ class GeneticAlgorithm:
                 bestInd = copy.deepcopy(population[0])
                 print("New best: "+ str(bestInd) + " current step: "+ str(t))
             children=[]
-            for i in range(ELITE):
-                for j in range(int(POPULATION/ELITE)):
+            for i in range(elite):
+                for j in range(int(POPULATION/elite)):
 
-                    ind=Individual.Individual(population[i].genes, population[j].score)
+                    ind=Individual(population[i].genes, population[j].score)
                     mutationsCounter=0
                     while 1==1: #draw number of mutations (poisson distibution for p=pM)
                         if random.randint(0,99)<=pM:
