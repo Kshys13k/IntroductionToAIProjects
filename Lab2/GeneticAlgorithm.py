@@ -7,10 +7,10 @@ import Individual
 
 class GeneticAlgorithm:
     def __init__(self):
-        self.population=self.generateRandomPopulation()
-    def generateRandomPopulation(self):
+        self.population=self.generateRandomPopulation(100)
+    def generateRandomPopulation(self, populationSize):
         population = []
-        for i in range(0, 100):  # losowanie populacji
+        for i in range(0, populationSize):
             x = np.random.uniform(-100, 100, size=(1, 10))
             ind = Individual.Individual(x)
             population.append(ind)

@@ -1,6 +1,6 @@
 import GeneticAlgorithm
 
 gn=GeneticAlgorithm.GeneticAlgorithm()
-gn.generateRandomPopulation()
-gn.geneticAlgorithmStats(50,10000)
+gn.generateRandomPopulation(1000)
+gn.geneticAlgorithmStats(5,1000)
 gn.printPopulation()
