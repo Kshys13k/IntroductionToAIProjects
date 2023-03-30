@@ -8,7 +8,7 @@ import Individual
 class GeneticAlgorithm:
     def __init__(self):
         self.population=self.generateRandomPopulation(100)
-    def generateRandomPopulation(self, populationSize):
+    def generateRandomPopulation(self, populationSize, functionNumber=4):
         population = []
         for i in range(0, populationSize):
             x = np.random.uniform(-100, 100, size=(1, 10))
@@ -18,7 +18,7 @@ class GeneticAlgorithm:
 
     #pM- probability od mutation [%]
     #tMAX- number of evolution steps
-    def geneticAlgorithm(self, pM=5, tMAX=10000):
+    def geneticAlgorithm(self, pM=5, tMAX=10000, functionNumber=4):
         POPULATION=len(self.population)
         ELITE = int(POPULATION/2)
         population=self.population
@@ -30,7 +30,7 @@ class GeneticAlgorithm:
             for i in range(ELITE):
                 for j in range(int(POPULATION/ELITE)):
 
-                    ind=Individual.Individual(population[i].genes, population[j].score)
+                    ind=Individual.Individual(population[i].genes, population[j].score, functionNumber)
                     mutationsCounter=0
                     while 1==1: #draw number of mutations (poisson distibution for p=pM)
                         if random.randint(0,99)<=pM: mutationsCounter+=1
@@ -44,13 +44,13 @@ class GeneticAlgorithm:
                         newAllel = random.uniform(-100, 100)
                         geneToChange = random.randint(0, 9)
                         ind.genes[0][geneToChange] = newAllel
-                        ind.calculateScore()
+                        ind.calculateScore(functionNumber)
                     children.append(ind)
             population = children
             t += 1
         self.population=population
 
-    def geneticAlgorithmVerbose(self, pM=5, tMAX=10000):
+    def geneticAlgorithmVerbose(self, pM=5, tMAX=10000, functionNumber=4):
         POPULATION=len(self.population)
         ELITE = int(POPULATION/2)
         population=self.population
@@ -79,13 +79,13 @@ class GeneticAlgorithm:
                         newAllel = random.uniform(-100, 100)
                         geneToChange = random.randint(0, 9)
                         ind.genes[0][geneToChange] = newAllel
-                        ind.calculateScore()
+                        ind.calculateScore(functionNumber)
                     children.append(ind)
             population = children
             t += 1
         self.population=population
 
-    def geneticAlgorithmStats(self, pM=5, tMAX=10000):
+    def geneticAlgorithmStats(self, pM=5, tMAX=10000, functionNumber=4):
 
         POPULATION=len(self.population)
         ELITE = int(POPULATION/2)
@@ -121,13 +121,13 @@ class GeneticAlgorithm:
                         newAllel = random.uniform(-100, 100)
                         geneToChange = random.randint(0, 9)
                         ind.genes[0][geneToChange] = newAllel
-                        ind.calculateScore()
+                        ind.calculateScore(functionNumber)
                     children.append(ind)
             population = children
             t += 1
         self.population=population
 
-    def geneticAlgorithm2Stats(self, pM=5, tMAX=10000):
+    def geneticAlgorithm2Stats(self, pM=5, tMAX=10000, functionNumber=4):
         print(str(pM))
         POPULATION=len(self.population)
         ELITE = int(POPULATION/2)
@@ -163,7 +163,7 @@ class GeneticAlgorithm:
                         change = random.uniform(-10, 10)
                         geneToChange = random.randint(0, 9)
                         ind.genes[0][geneToChange] += change
-                        ind.calculateScore()
+                        ind.calculateScore(functionNumber)
                     children.append(ind)
             population=children
             t += 1
