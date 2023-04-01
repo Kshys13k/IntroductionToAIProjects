@@ -14,6 +14,7 @@ class GeneticAlgorithm:
             x = np.random.uniform(-100, 100, size=(1, 10))
             ind = Individual(x)
             population.append(ind)
+        self.population=population
         return population
 
     #pM- probability od mutation [%]

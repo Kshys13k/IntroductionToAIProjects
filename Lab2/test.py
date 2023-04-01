@@ -1,6 +1,11 @@
-import GeneticAlgorithm
+from Lab2.GeneticAlgorithm import GeneticAlgorithm
 
-gn=GeneticAlgorithm.GeneticAlgorithm()
-gn.generateRandomPopulation(1000)
-gn.geneticAlgorithmStats(5,1000)
-gn.printPopulation()
+results=[]
+for i in range(25):
+    g=GeneticAlgorithm()
+    g.generateRandomPopulation(1000)
+    bestIndScore=g.geneticAlgorithm(5,10,4,500)
+    #bestIndScore=g.geneticAlgorithm2(5,1000)
+    results.append(bestIndScore)
+mean=sum(results)/len(results)
+print(mean)
