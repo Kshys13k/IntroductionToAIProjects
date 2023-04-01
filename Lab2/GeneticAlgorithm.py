@@ -18,7 +18,7 @@ class GeneticAlgorithm:
 
     #pM- probability od mutation [%]
     #tMAX- number of evolution steps
-    def geneticAlgorithmStats(self, pM=5, tMAX=10000, functionNumber=4, elite=50):
+    def geneticAlgorithm(self, pM=5, tMAX=10000, functionNumber=4, elite=50):
 
         POPULATION=len(self.population)
         population=self.population
