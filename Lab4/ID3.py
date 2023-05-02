@@ -42,34 +42,46 @@ class ID3:
     def __init__(self,df):
         pass
 
-    #given: whole main dataframe, unique answears
-    #return: entropy of whole dataset
-    def __calcTotalEntropy(self, df, uniqueValues):
-        numberOfRows=df.shape[0]
-        totalEntropy=0
-        for value in uniqueValues:
-            count=df[df.iloc[:,-1]==value].shape[0]
-            subEntropy=-(count/numberOfRows)*np.log2(count/numberOfRows)
-            totalEntropy+=subEntropy
-        return totalEntropy
-
-    #given: subdataset contains only one parameter, unique answears
+    #given: subdataset contains only answears column to calculate entropy, unique answears
     #return: entropy of one parameter
-    def __calcEntropy(self, subDf, uniqueValues):
+    @staticmethod
+    def __calcEntropy(subDf, uniqueValues):
         numberOfRows = subDf.shape[0]
-        totalEntropy = 0
+        totalEntropy = 0.0
         for value in uniqueValues:
-            count = subDf[subDf.iloc[:, -1] == value].shape[0]
+            count = subDf[subDf.iloc[:, 0] == value].shape[0]
             subEntropy=0
             if count != 0:
                 subEntropy = -(count / numberOfRows) * np.log2(count / numberOfRows)
             totalEntropy += subEntropy
         return totalEntropy
 
-    def __calcInfoGain(self, parameterName, df, ):
-        uniqueValues=
+    @staticmethod
+    def calcInfoGain(parameterName, df, uniqueValues):
+        df=df[[parameterName, df.columns[-1]]]
+
+        #calculateTotalEntropy
+        dfTotalEntropy=df.iloc[:,1:2]
+        totalEntropy=ID3.__calcEntropy(dfTotalEntropy, uniqueValues)
+
+        #calculate parameter info
+        parameterUniqueValues=df.iloc[:,0].unique()
+        numberOfRows=df.shape[0]
+        parameterInfo=0.0
+        for parameterValue in parameterUniqueValues:
+            dfSpecificValue= df[df.iloc[:,0]==parameterValue]
+            specificValueCount=dfSpecificValue.shape[0]
+            dfSpecificValue=dfSpecificValue.iloc[:,1:2]
+            subEntropy=ID3.__calcEntropy(dfSpecificValue, uniqueValues)
+            specificValueProbability=specificValueCount/numberOfRows
+            parameterInfo+=subEntropy * specificValueProbability
+        infoGain=totalEntropy-parameterInfo
+        return infoGain
+
+
     def train(self, trainingDataSet, answears):
         answears.columns=["answears"]
+        #uniqueValues= unique answears
         df=pd.concat([trainingDataSet, answears], axis=1)
 
         #check if all answears are the same
