@@ -3,7 +3,7 @@ import random
 import numpy as np
 from cec2017.functions import f1, f2, f3
 import matplotlib.pyplot as plt
-from Lab2.Individual import  Individual
+from Individual import Individual
 
 class GeneticAlgorithm:
     def __init__(self):
@@ -98,7 +98,6 @@ class GeneticAlgorithm:
         self.population=population
         return bestInd.score
     def geneticAlgorithm2(self, pM=5, tMAX=10000, functionNumber=4, elite=50):
-        print(str(pM))
         POPULATION=len(self.population)
         population=self.population
         population = sorted(population, key=lambda x: x.score, reverse=False)
