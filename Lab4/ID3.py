@@ -13,10 +13,10 @@ class Node:
 
 
 class Tree:
-    nodeList=[]
-    maxNodeNumber=-1
-
-    def addNode(self, parameter, parentId=0, parentValue=""): #node parameter, id of parent, value of parameter in parrent that lead to this node
+    def __init__(self):
+        self.nodeList = []
+        self.maxNodeNumber = -1
+    def addNode(self, parameter, parentId, parentValue): #node parameter, id of parent, value of parameter in parrent that lead to this node
         if self.maxNodeNumber==-1:
             node= Node(0, parameter)
             self.nodeList.append(node)
@@ -27,6 +27,7 @@ class Tree:
             parentNode=self.nodeList(parentId)
             parentNode.children[parentValue]=node
             self.maxNodeNumber+=1
+        return self.maxNodeNumber #return Id of new node
 
     def getChildEqualValue(self, id, value):
         currentNode=self.nodeList(id)
@@ -34,13 +35,14 @@ class Tree:
             if value == childValue:
                 return currentNode.children[value].id
 
-
+    def getLastNode(self):
+        return self.nodeList[self.maxNodeNumber]
 
 
 
 class ID3:
-    def __init__(self,df):
-        pass
+    def __init__(self):
+        self.tree=Tree()
 
     #given: subdataset contains only answears column to calculate entropy, unique answears
     #return: entropy of one parameter
@@ -57,7 +59,7 @@ class ID3:
         return totalEntropy
 
     @staticmethod
-    def calcInfoGain(parameterName, df, uniqueValues):
+    def __calcInfoGain(parameterName, df, uniqueValues):
         df=df[[parameterName, df.columns[-1]]]
 
         #calculateTotalEntropy
@@ -78,19 +80,53 @@ class ID3:
         infoGain=totalEntropy-parameterInfo
         return infoGain
 
+    @staticmethod
+    def __findBestParameter(df, uniqueValues):
+        parametersList=list(df.columns())
+
+        maxInfoGain=-1
+        maxInfoParameter=None
+
+        for param in parametersList:
+            infoGain=ID3.__calcInfoGain(param, df, uniqueValues)
+            if infoGain>maxInfoGain:
+                maxInfoGain=infoGain
+                maxInfoParameter=param
+
+        return maxInfoParameter
+
+    def id3main(self, df, parentId=None, parentValue=""):
+        uniqueValues = list(df["answears"].unique())
+        #check if all answears are the same:
+        if df["answears"].nunique()==1:
+            parameter=df.columns[0]
+            self.tree.addNode(parameter,parentId,parentValue)
+            node=self.tree.getLastNode()
+            node.isLeaf=True
+            node.value = df.iloc[0,0]
+        #check if number of parameters is 0:
+        if df.shape[1]==1:
+            parameter=None
+            self.tree.addNode(parameter, parentId, parentValue)
+            mostCommonValue = df["answears"].value_counts().idxmax()
+            node = self.tree.getLastNode()
+            node.isLeaf = True
+            node.value = mostCommonValue
+
+        #if this is not a leaf create new branches:
+        bestParameter=ID3.__findBestParameter(df, uniqueValues)
+        myId=self.tree.addNode(bestParameter,parentId,parentValue)
+        parameterValues=list(df[bestParameter].unique())
+        for value in parameterValues:
+            childDf=df.drop(columns=[value])
+            self.id3main(childDf,myId,value)
 
     def train(self, trainingDataSet, answears):
-        answears.columns=["answears"]
-        #uniqueValues= unique answears
-        df=pd.concat([trainingDataSet, answears], axis=1)
-
-        #check if all answears are the same
-        if df["answears"].nunique()==1:
-            pass
-
-        #check if number of parameters is 0
-        if df.shape[1]==1:
-            pass
+        answears.columns = ["answears"]
+        df = pd.concat([trainingDataSet, answears], axis=1)
+        parentId = None
+        parentValue = ""
+        self.id3main(df,parentId,parentValue)
 
 
     def predict(self):
