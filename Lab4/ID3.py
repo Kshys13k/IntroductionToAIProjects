@@ -22,9 +22,10 @@ class Tree:
             self.nodeList.append(node)
             self.maxNodeNumber=0
         else:
-            node= Node(self.maxNodeNumber+1, parameter, self.nodeList(parentId))
+            parent=self.nodeList[parentId]
+            node= Node(self.maxNodeNumber+1, parameter, parent)
             self.nodeList.append(node)
-            parentNode=self.nodeList(parentId)
+            parentNode=self.nodeList[parentId]
             parentNode.children[parentValue]=node
             self.maxNodeNumber+=1
         return self.maxNodeNumber #return Id of new node
@@ -82,7 +83,7 @@ class ID3:
 
     @staticmethod
     def __findBestParameter(df, uniqueValues):
-        parametersList=list(df.columns())
+        parametersList=list(df.columns)
 
         maxInfoGain=-1
         maxInfoParameter=None
@@ -105,7 +106,7 @@ class ID3:
             node.isLeaf=True
             node.value = df.iloc[0,0]
         #check if number of parameters is 0:
-        if df.shape[1]==1:
+        elif df.shape[1]==1:
             parameter=None
             self.tree.addNode(parameter, parentId, parentValue)
             mostCommonValue = df["answears"].value_counts().idxmax()
@@ -113,13 +114,16 @@ class ID3:
             node.isLeaf = True
             node.value = mostCommonValue
 
-        #if this is not a leaf create new branches:
-        bestParameter=ID3.__findBestParameter(df, uniqueValues)
-        myId=self.tree.addNode(bestParameter,parentId,parentValue)
-        parameterValues=list(df[bestParameter].unique())
-        for value in parameterValues:
-            childDf=df.drop(columns=[value])
-            self.id3main(childDf,myId,value)
+        # if this is not a leaf create new branches:
+        else:
+            dfParameters=df.drop(columns="answears")
+            bestParameter=ID3.__findBestParameter(dfParameters, uniqueValues)
+            myId=self.tree.addNode(bestParameter,parentId,parentValue)
+            parameterValues=list(dfParameters[bestParameter].unique())
+            for value in parameterValues:
+                childDf=df[df[bestParameter]==value]
+                childDf=childDf.drop(columns=[bestParameter])
+                self.id3main(childDf,myId,value)
 
     def train(self, trainingDataSet, answears):
         answears.columns = ["answears"]
