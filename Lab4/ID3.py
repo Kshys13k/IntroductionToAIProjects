@@ -11,6 +11,25 @@ class Node:
         self.children = {} #Parametr value: node
         self.myParameter=myParameter
 
+    def __str__(self):
+        try:
+            parent = str(self.parent.id)
+        except:
+            parent = "None"
+        if self.isLeaf:
+            s = "Leaf, id: " + str(self.id) + ", myParam: " + str(self.myParameter) + ", parentId: " + str(parent) + ", value: " + str(self.value)
+        else:
+            strChildrenIds="("
+            for child in self.children.keys():
+                strChildrenIds += str(self.children.get(child).id)
+                strChildrenIds += ": "
+                strChildrenIds+=str(child)
+                strChildrenIds += ", "
+            strChildrenIds+=")"
+            s = "Branch, id: " + str(self.id) + ", myParam: " + str(self.myParameter) + ", parentId: " + str(parent) + ", children: " + strChildrenIds
+
+        return s
+
 
 class Tree:
     def __init__(self):
@@ -39,6 +58,9 @@ class Tree:
     def getLastNode(self):
         return self.nodeList[self.maxNodeNumber]
 
+    def printTree(self):
+        for node in self.nodeList:
+            print(node)
 
 
 class ID3:
@@ -104,14 +126,22 @@ class ID3:
             self.tree.addNode(parameter,parentId,parentValue)
             node=self.tree.getLastNode()
             node.isLeaf=True
-            node.value = df.iloc[0,0]
+            # print("#######1")
+            # print("df: \n" + str(df))
+            # print("value: " + str(df.iloc[0,-1]))
+            node.value = df.iloc[0,-1]
         #check if number of parameters is 0:
         elif df.shape[1]==1:
+            # print("TUTAJ")
             parameter=None
             self.tree.addNode(parameter, parentId, parentValue)
             mostCommonValue = df["answears"].value_counts().idxmax()
             node = self.tree.getLastNode()
             node.isLeaf = True
+            # print("#######2")
+            # print("df: \n" + str(df))
+            # print("df ans: " + str(df["answears"]))
+            # print("value: " + str(mostCommonValue))
             node.value = mostCommonValue
 
         # if this is not a leaf create new branches:
@@ -131,6 +161,7 @@ class ID3:
         parentId = None
         parentValue = ""
         self.id3main(df,parentId,parentValue)
+        self.tree.printTree()
 
 
     def predict(self):

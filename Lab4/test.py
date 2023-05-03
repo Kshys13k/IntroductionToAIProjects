@@ -2,9 +2,9 @@ from ID3 import ID3
 import pandas as pd
 import numpy as np
 
-df=pd.read_csv("breast-cancer.csv", header=None)
+df=pd.read_csv("smallDataSet.csv", header=None)
 
-df=df.rename(columns={0:"class",1:"age", 2:"menopause", 3:"tumor-size" , 4:"inv-nodes" , 5:"node-caps" , 6:"deg-malig" , 7:"breast" , 8:"breast-quad" , 9:"irradiat"})
+df=df.rename(columns={0:"class",1:"pogoda", 2:"wiatr", 3:"pora"})
 dataClass=df.iloc[:,0:1]
 data=df.iloc[:,1:]
 
