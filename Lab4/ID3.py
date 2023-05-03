@@ -132,7 +132,7 @@ class ID3:
             node.value = df.iloc[0,-1]
         #check if number of parameters is 0:
         elif df.shape[1]==1:
-            print("TUTAJ")
+
             parameter=None
             self.tree.addNode(parameter, parentId, parentValue)
             mostCommonValue = df["answears"].value_counts().idxmax()
