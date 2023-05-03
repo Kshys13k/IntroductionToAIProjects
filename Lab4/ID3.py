@@ -161,8 +161,22 @@ class ID3:
         parentId = None
         parentValue = ""
         self.id3main(df,parentId,parentValue)
-        self.tree.printTree()
+        # self.tree.printTree()
 
-
-    def predict(self):
-        pass
+    def readTree(self, row, node):
+        if node.isLeaf:
+            return node.value
+        parameter=node.myParameter
+        col=pd.DataFrame(row.loc[:,parameter])
+        parameterValue=col.iloc[0,0]
+        child=node.children.get(parameterValue)
+        return self.readTree(row,child)
+    def predict(self,df):
+        root=self.tree.nodeList[0]
+        newCol=[]
+        for i in range (df.shape[0]):
+            rowDf=df.iloc[i:i+1,:]
+            newCol.append(self.readTree(rowDf, root))
+        dictionary = {"Predictions": newCol}
+        df2 = pd.DataFrame(dictionary)
+        return df2

@@ -10,7 +10,8 @@ data=df.iloc[:,1:]
 
 id3=ID3()
 id3.train(data,dataClass)
-
+ans=id3.predict(data)
+print(ans)
 # df=pd.concat([data,dataClass], axis=1)
 #
 # uniqueValues=["no-recurrence-events","recurrence-events"]
