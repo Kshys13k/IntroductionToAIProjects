@@ -118,7 +118,9 @@ class ID3:
 
         return maxInfoParameter
 
-    def id3main(self, df, parentId=None, parentValue=""):
+    def id3main(self, df, parentId=None, parentValue="", dfOryginal=None):
+        if dfOryginal is None:
+            dfOryginal=df.copy()
         uniqueValues = list(df["answears"].unique())
         #check if all answears are the same:
         if df["answears"].nunique()==1:
@@ -126,9 +128,6 @@ class ID3:
             self.tree.addNode(parameter,parentId,parentValue)
             node=self.tree.getLastNode()
             node.isLeaf=True
-            # print("#######1")
-            # print("df: \n" + str(df))
-            # print("value: " + str(df.iloc[0,-1]))
             node.value = df.iloc[0,-1]
         #check if number of parameters is 0:
         elif df.shape[1]==1:
@@ -138,10 +137,6 @@ class ID3:
             mostCommonValue = df["answears"].value_counts().idxmax()
             node = self.tree.getLastNode()
             node.isLeaf = True
-            # print("#######2")
-            # print("df: \n" + str(df))
-            # print("df ans: " + str(df["answears"]))
-            # print("value: " + str(mostCommonValue))
             node.value = mostCommonValue
 
         # if this is not a leaf create new branches:
@@ -149,11 +144,15 @@ class ID3:
             dfParameters=df.drop(columns="answears")
             bestParameter=ID3.__findBestParameter(dfParameters, uniqueValues)
             myId=self.tree.addNode(bestParameter,parentId,parentValue)
-            parameterValues=list(dfParameters[bestParameter].unique())
+            parameterValues=list(dfOryginal[bestParameter].unique())
             for value in parameterValues:
                 childDf=df[df[bestParameter]==value]
                 childDf=childDf.drop(columns=[bestParameter])
-                self.id3main(childDf,myId,value)
+                #t
+                if childDf.shape[0] == 0:
+                    childDf = pd.DataFrame(df["answears"])
+
+                self.id3main(childDf,myId,value, dfOryginal)
 
     def train(self, trainingDataSet, answears):
         answears.columns = ["answears"]
