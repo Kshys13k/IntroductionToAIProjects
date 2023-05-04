@@ -160,7 +160,7 @@ class ID3:
         parentId = None
         parentValue = ""
         self.id3main(df,parentId,parentValue)
-        self.tree.printTree()
+        #self.tree.printTree()
 
     def readTree(self, row, node):
         if node is None:
