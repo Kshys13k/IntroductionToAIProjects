@@ -163,6 +163,8 @@ class ID3:
         self.tree.printTree()
 
     def readTree(self, row, node):
+        if node is None:
+            return "noData"
         if node.isLeaf:
             return node.value
         parameter=node.myParameter

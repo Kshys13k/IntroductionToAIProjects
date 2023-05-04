@@ -22,11 +22,15 @@ print(ans)
 print(testY)
 good=0
 bad=0
+noData=0
 for i in range(ans.shape[0]):
     row1 = ans.iloc[i, 0]
     row2 = testY.iloc[i, 0]
+    if ans.iloc[i,0]=="noData":
+        noData+=1
     if row1 == row2:
         good+=1
     else:
         bad+=1
 print("good: "+ str(good) + ", bad: "+ str(bad))
+print("noData :" + str(noData))
