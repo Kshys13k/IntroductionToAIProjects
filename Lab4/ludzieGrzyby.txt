@@ -1,0 +1,6 @@
+x,s,n,t,p,f,c,n,k,e,e,s,s,w,w,p,w,o,p,k,s,u
+f,s,c,f,a,f,d,n,o,t,e,k,s,b,c,u,w,o,c,k,a,g #Zu
+c,s,p,f,y,a,d,n,p,t,r,s,s,p,c,p,w,t,z,h,y,l #Diduś
+k,g,p,t,s,n,w,n,h,t,b,k,f,c,p,p,n,t,e,h,a,u #Nastka
+f,g,r,f,y,n,w,n,o,e,b,f,f,o,o,u,y,t,l,h,n,d #Ula
+b,s,p,f,a,f,d,n,w,t,c,s,f,c,c,p,w,t,f,r,a,m #Jank
