@@ -16,7 +16,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ToDo tu prosze podac pierwsze cyfry numerow indeksow
-p = [4, 9]
+p = [4, 1]
 
 L_BOUND = -5
 U_BOUND = 5
@@ -70,11 +70,11 @@ class DlNet:
         self.first_weights = np.random.randn(self.HIDDEN_L_SIZE, 1)
         self.first_biases = np.zeros([self.HIDDEN_L_SIZE, 1])
 
-        self.second_weights = np.zeros([1, self.HIDDEN_L_SIZE])
-        self.second_bias = np.zeros([1, 1])
+        #self.second_weights = np.zeros([1, self.HIDDEN_L_SIZE])
+        #self.second_bias = np.zeros([1, 1])
         #alternatywne, losowe generowanie wag w drugiej warstwie (lepsze rezultaty)
-        # self.second_weights = np.random.randn(1, self.HIDDEN_L_SIZE)
-        # self.second_bias = np.zeros([1, 1])
+        self.second_weights = np.random.randn(1, self.HIDDEN_L_SIZE)
+        self.second_bias = np.zeros([1, 1])
 
     def forward(self, x, y):
         yh, values = self.predict(x)
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     function_samples = 100 # Wielkość zbioru uczącego
     neuron_number = 9 # liczba neuronów
     learning_rate = 0.15 # współczynnik nauczania(beta)
-    iterations = 15000 # liczba iteracji
+    iterations = 50000 # liczba iteracji
     #
     loss_list=[]
     for i in range(20):
@@ -142,7 +142,7 @@ if __name__ == "__main__":
         print(f'Średnia strata: {np.average(loss)}')
         loss_list.append(np.average(loss))
         # funkcja narysowana na czerwono, to funkcja rzeczywista, a na niebiesko, wynik działania algorytmu
-        #show_results(x.reshape(function_samples), y.reshape(function_samples), yh)
+        show_results(x.reshape(function_samples), y.reshape(function_samples), yh)
 
     mean=statistics.mean(loss_list)
     print("Średnia z 20-tu doświadczeń: " + str(mean))
