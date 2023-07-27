@@ -18,6 +18,7 @@ class Square:
     def __init__(self,x,y):
         self.x=x
         self.y=y
+
 class GameState:
     def __init__(self):
         self.board = copy.deepcopy(EMPTY_BOARD)
@@ -66,7 +67,11 @@ class GameState:
             return False
     def printBoard(self):
         for i in range (len(self.board)):
-            print(self.board[i])
+            row=""
+            for j in range (len(self.board)):
+                row+="["+self.board[i][j]+"]"
+            print(row)
+
 
 def win():
     os.system("clear")
