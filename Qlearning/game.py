@@ -21,12 +21,25 @@ class Square:
 
 class GameState:
     def __init__(self):
+        #creating board, player and target
         self.board = copy.deepcopy(EMPTY_BOARD)
         self.player=Square(0,0)
         self.target=Square(0,9)
 
         self.board[self.player.x][self.player.y]="P"
         self.board[self.target.x][self.target.y] = "T"
+
+        #creating traps
+        self.traps=[]
+        self.traps.append(Square(0,4))
+        self.traps.append(Square(0,5))
+        self.traps.append(Square(0, 6))
+        self.traps.append(Square(3, 4))
+        self.traps.append(Square(3, 5))
+        self.traps.append(Square(3, 6))
+
+        for trap in self.traps:
+            self.board[trap.x][trap.y]="X"
 
     def moveUp(self):
         if self.player.x==0:
@@ -65,6 +78,13 @@ class GameState:
             return True
         else:
             return False
+
+    def youLost(self):
+        youLost=False
+        for trap in self.traps:
+            if self.player.x==trap.x and self.player.y==trap.y:
+                youLost=True
+        return youLost
     def printBoard(self):
         for i in range (len(self.board)):
             row=""
@@ -76,6 +96,10 @@ class GameState:
 def win():
     os.system("clear")
     print("You Won!")
+
+def loss():
+    os.system("clear")
+    print("You Lost!")
 
 
 def main():
@@ -102,6 +126,9 @@ def main():
 
         if gameState.youWon():
             win()
+            gameState=GameState()
+        if gameState.youLost():
+            loss()
             gameState=GameState()
 
 
